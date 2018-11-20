@@ -203,3 +203,10 @@ REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
 }
+
+import sys
+print(sys.path)
+# 指定默认的用户模型类
+# String model references must be of the form 'app_label.ModelName' 指定用户认证模型必须以应用名.模型名写法
+# AUTH_USER_MODEL = 'meiduo_mall.apps.users.User'
+AUTH_USER_MODEL = 'users.User'
