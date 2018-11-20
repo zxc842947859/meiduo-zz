@@ -35,8 +35,8 @@ SECRET_KEY = '=y5bzg+9i*n8vix6n33lbk-of2mwk@hn$877q(27wmh)6xlf1c'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+# 指定能访问Django服务器的主机
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'www.meiduo.site', 'api.meiduo.site']
 
 # Application definition
 
@@ -49,11 +49,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',  # 注册DRF  如果应用中用到模板或模型建表一定要注册
+    'corsheaders',  # cors 解决跨域的应用
 
     'users.apps.UsersConfig',  # 注册users应用
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # 最外层的中间件
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -83,7 +86,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
@@ -97,7 +99,6 @@ DATABASES = {
         'NAME': 'meiduo_mall_SZ20'  # 数据库名字
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
@@ -117,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -135,13 +135,10 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
-
-
 
 # 配置redis数据库作为缓存后端
 CACHES = {
@@ -158,12 +155,17 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
+    },
+    "verify_codes": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.103.210:6379/2",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
-
-
 
 # 日志
 LOGGING = {
@@ -207,15 +209,22 @@ LOGGING = {
     }
 }
 
-
 # DRF配置
 REST_FRAMEWORK = {
     # 异常处理
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
 }
 
-
 # 指定默认的用户模型类
 # String model references must be of the form 'app_label.ModelName' 指定用户认证模型必须以应用名.模型名写法
 # AUTH_USER_MODEL = 'meiduo_mall.apps.users.User'
 AUTH_USER_MODEL = 'users.User'
+
+# CORS  添加访问白名单
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8080',
+    'localhost:8080',
+    'www.meiduo.site:8080',
+    'api.meiduo.site:8000'
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie

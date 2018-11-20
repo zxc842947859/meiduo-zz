@@ -21,4 +21,7 @@ urlpatterns = [
 
     # 发短信
     url(r'^', include('verifications.urls')),
+
+    # 注册
+    url(r'^', include('users.urls')),
 ]
