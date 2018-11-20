@@ -6,9 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+<<<<<<< HEAD
 .idea/
 logs/*.log
 
+=======
+>>>>>>> b16f1d305296f0d7e88e5fb88118b47fd2749cb4
 # Distribution / packaging
 .Python
 build/
@@ -75,10 +78,13 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+<<<<<<< HEAD
 # IPython
 profile_default/
 ipython_config.py
 
+=======
+>>>>>>> b16f1d305296f0d7e88e5fb88118b47fd2749cb4
 # pyenv
 .python-version
 
@@ -109,5 +115,8 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+<<<<<<< HEAD
 .dmypy.json
 dmypy.json
+=======
+>>>>>>> b16f1d305296f0d7e88e5fb88118b47fd2749cb4
