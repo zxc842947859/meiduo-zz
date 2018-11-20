@@ -13,10 +13,18 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import sys
+
+# os.path 主要用来拼接路径
+#  /Users/chao/Desktop/meiduo_SZ20/meiduo_mall', '/Users/chao/Desktop/meiduo_SZ20'
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# /Users/chao/Desktop/meiduo_SZ20/meiduo_mall/meiduo_mall
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+# 给系统的导包列表中多加一个导包路径
+sys.path.append(os.path.join(BASE_DIR, 'apps'))
+# print(BASE_DIR)
+# print(sys.path)  # 导包路径
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -41,6 +49,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',  # 注册DRF  如果应用中用到模板或模型建表一定要注册
+
+    'users.apps.UsersConfig',  # 注册users应用
 ]
 
 MIDDLEWARE = [
@@ -204,8 +214,7 @@ REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler',
 }
 
-import sys
-print(sys.path)
+
 # 指定默认的用户模型类
 # String model references must be of the form 'app_label.ModelName' 指定用户认证模型必须以应用名.模型名写法
 # AUTH_USER_MODEL = 'meiduo_mall.apps.users.User'
