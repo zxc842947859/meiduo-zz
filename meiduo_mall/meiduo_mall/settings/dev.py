@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',  # 注册DRF  如果应用中用到模板或模型建表一定要注册
 ]
 
 MIDDLEWARE = [
@@ -77,8 +79,12 @@ WSGI_APPLICATION = 'meiduo_mall.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': '192.168.103.210',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'meiduo_sz20',  # 数据库用户名
+        'PASSWORD': 'meiduo_sz20',  # 数据库用户密码
+        'NAME': 'meiduo_mall_SZ20'  # 数据库名字
     }
 }
 
@@ -120,3 +126,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+
+# 配置redis数据库作为缓存后端
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.103.210:6379/0",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    },
+    "session": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.103.210:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "session"
